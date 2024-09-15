@@ -26,25 +26,34 @@ class ViewController: UIViewController {
         return $0
     }(UILabel())
     
-    private lazy var oneButton = CustomButton(text: "1", color: .blue)
-    private lazy var twoButton = CustomButton(text: "2", color: .blue)
-    private lazy var threeButton = CustomButton(text: "3", color: .blue)
-    private lazy var fourButton = CustomButton(text: "4", color: .blue)
-    private lazy var fiveButton = CustomButton(text: "5", color: .blue)
-    private lazy var sixButton = CustomButton(text: "6", color: .blue)
-    private lazy var sevenButton = CustomButton(text: "7", color: .blue)
-    private lazy var eightButton = CustomButton(text: "8", color: .blue)
-    private lazy var nineButton = CustomButton(text: "9", color: .blue)
-    private lazy var pointButton = CustomButton(text: ".", color: .blue)
-    private lazy var plusMinusButton = CustomButton(text: "+/-", color: .blue)
-    private lazy var percentButton = CustomButton(text: "%", color: .blue)
-    private lazy var acButton = CustomButton(text: "AC", color: .blue)
-    private lazy var plusButton = CustomButton(text: "+", color: .blue)
-    private lazy var minusButton = CustomButton(text: "-", color: .blue)
-    private lazy var multiplierButton = CustomButton(text: "*", color: .blue)
-    private lazy var equalButton = CustomButton(text: "=", color: .blue)
-    private lazy var devisionButton = CustomButton(text: "÷", color: .blue)
-    private lazy var zeroButton = CustomButton(text: "0", color: .blue)
+    
+    //MARK: - Setup colors
+    private let greyColor = UIColor(red: 85/255, green: 85/255, blue: 85/255, alpha: 1)
+    private let blueColor = UIColor(red: 82/255, green: 170/255, blue: 241/255, alpha: 1)
+    private let orangeColor = UIColor(red: 240/255, green: 153/255, blue: 55/255, alpha: 1)
+    
+    private lazy var percentButton = CustomButton(text: "%", color: greyColor)
+    private lazy var plusMinusButton = CustomButton(text: "+/-", color: greyColor)
+    private lazy var acButton = CustomButton(text: "AC", color: greyColor)
+    
+    private lazy var oneButton = CustomButton(text: "1", color: blueColor)
+    private lazy var twoButton = CustomButton(text: "2", color: blueColor)
+    private lazy var threeButton = CustomButton(text: "3", color: blueColor)
+    private lazy var fourButton = CustomButton(text: "4", color: blueColor)
+    private lazy var fiveButton = CustomButton(text: "5", color: blueColor)
+    private lazy var sixButton = CustomButton(text: "6", color: blueColor)
+    private lazy var sevenButton = CustomButton(text: "7", color: blueColor)
+    private lazy var eightButton = CustomButton(text: "8", color: blueColor)
+    private lazy var nineButton = CustomButton(text: "9", color: blueColor)
+    private lazy var pointButton = CustomButton(text: ".", color: blueColor)
+    private lazy var zeroButton = CustomButton(text: "0", color: blueColor)
+
+
+    private lazy var plusButton = CustomButton(text: "+", color: orangeColor)
+    private lazy var minusButton = CustomButton(text: "-", color: orangeColor)
+    private lazy var multiplierButton = CustomButton(text: "*", color: orangeColor)
+    private lazy var equalButton = CustomButton(text: "=", color: orangeColor)
+    private lazy var devisionButton = CustomButton(text: "÷", color: orangeColor)
     
     private lazy var bottomStack = CustomStack()
     
@@ -56,48 +65,77 @@ class ViewController: UIViewController {
         view.axis = .vertical
         view.spacing = 1
         view.translatesAutoresizingMaskIntoConstraints = false
-    }
+        return view
+    }()
     
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .black
-        
-        
+        setupUI()
     }
     //MARK: -  func setupUI
     
     func setupUI() {
         view.addSubview(baseStackView)
         baseStackView.addArrangedSubview(topLabel)
-        baseStackView.addArrangedSubview(fifthStack)
+        baseStackView.addArrangedSubview(firstStack)
         baseStackView.addArrangedSubview(secondStack)
         baseStackView.addArrangedSubview(thirdStack)
         baseStackView.addArrangedSubview(fourthStack)
         baseStackView.addArrangedSubview(fifthStack)
-        baseStackView.addArrangedSubview(percentButton)
-        baseStackView.addArrangedSubview(plusMinusButton)
-        baseStackView.addArrangedSubview(acButton)
-        baseStackView.addArrangedSubview(devisionButton)
+        
+        firstStack.addArrangedSubview(percentButton)
+        firstStack.addArrangedSubview(plusMinusButton)
+        firstStack.addArrangedSubview(acButton)
+        firstStack.addArrangedSubview(devisionButton)
+        
+        secondStack.addArrangedSubview(sevenButton)
+        secondStack.addArrangedSubview(eightButton)
+        secondStack.addArrangedSubview(nineButton)
+        secondStack.addArrangedSubview(multiplierButton)
+        
+        thirdStack.addArrangedSubview(fourButton)
+        thirdStack.addArrangedSubview(fiveButton)
+        thirdStack.addArrangedSubview(sixButton)
+        thirdStack.addArrangedSubview(minusButton)
+        
+        fourthStack.addArrangedSubview(oneButton)
+        fourthStack.addArrangedSubview(twoButton)
+        fourthStack.addArrangedSubview(threeButton)
+        fourthStack.addArrangedSubview(plusButton)
+        
+        fifthStack.addArrangedSubview(zeroButton)
+        bottomStack.addArrangedSubview(pointButton)
+        bottomStack.addArrangedSubview(equalButton)
+        fifthStack.addArrangedSubview(bottomStack)
+        
+        setupConstraints()
         
     }
     
+  //MARK: - func setupConstraints
     
     func setupConstraints() {
-        let width = view.widthAnchor
         
         NSLayoutConstraint.activate([
-        
-        
-        
+            baseStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            baseStackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            baseStackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            baseStackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            
+            
+          
         ])
     }
     
     
+    //MARK: - class CustomStack and CustomButton
     
    final class CustomStack: UIStackView {
         override init(frame: CGRect) {
         super .init(frame: frame)
+            createStack()
         }
         
         required init(coder: NSCoder) {
@@ -118,6 +156,10 @@ class ViewController: UIViewController {
             self.text = text
             self.color = color
             super .init(frame: .zero)
+            setTitle(text, for: .normal)
+            backgroundColor = color
+            setTitleColor(.white, for: .normal)
+            translatesAutoresizingMaskIntoConstraints = false
         
         }
         
@@ -131,4 +173,5 @@ class ViewController: UIViewController {
         }
     }
 }
+
 
